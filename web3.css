@@ -1,0 +1,188 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Helvetica Neue", Arial, sans-serif;
+  background: #120f16; 
+  color: #f4f0e9;
+}
+
+
+.site-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2.5rem clamp(1.5rem, 4vw, 4rem);
+}
+
+.header-text h1 {
+  font-size: clamp(1.7rem, 2.6vw, 2.3rem);
+  margin: 0 0 0.2rem;
+}
+
+.header-text p {
+  margin: 0;
+  font-size: 0.95rem;
+  opacity: 0.8;
+}
+
+.bookshelf-wrapper {
+  padding: 1rem clamp(1.5rem, 4vw, 4rem) 4rem;
+}
+
+.bookshelf {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  align-items: center;
+  position: relative;
+}
+
+.bookshelf::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: -0.7rem;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    #4f435a 10%,
+    #4f435a 90%,
+    transparent 100%
+  );
+  opacity: 0.7;
+}
+
+.book {
+  width: min(960px, 100%);
+  height: 80px;
+  border-radius: 12px;
+  border: none;
+  display: flex;
+  justify-content: center;  
+  align-items: center;       
+  text-align: center;        
+
+  padding: 0 2.4rem;
+  cursor: pointer;
+  background: linear-gradient(135deg, #252734, #1b1c26);
+  color: inherit;
+  position: relative;
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.55);
+
+  transform-origin: center;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease,
+    filter 0.25s ease;
+}
+
+
+.book::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.14), transparent);
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+.book-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.book:hover,
+.book:focus-visible {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.65);
+  filter: brightness(1.05);
+  outline: none;
+}
+
+.book[data-city="madrid"] {
+  background: linear-gradient(135deg, #c18b4a, #8f5a2b);
+}
+
+.book[data-city="paris"] {
+  background: linear-gradient(135deg, #3a4f78, #222b42);
+}
+
+.book[data-city="seoul"] {
+  background: linear-gradient(135deg, #4e6472, #283740);
+}
+
+.book[data-city="rome"] {
+  background: linear-gradient(135deg, #6d5a48, #3b2f25);
+}
+
+.book[data-city="sydney"] {
+  background: linear-gradient(135deg, #3c6f7e, #21434f);
+}
+
+.book[data-city="london"] {
+  background: linear-gradient(135deg, #34394c, #202330);
+}
+
+.book[data-city="buenos-aires"] {
+  background: linear-gradient(135deg, #8c3a4e, #4d1c2b);
+}
+
+.book[data-city="dublin"] {
+  background: linear-gradient(135deg, #3e6b4b, #23412c);
+}
+
+.book[data-city="berlin"] {
+  background: linear-gradient(135deg, #5c4a72, #342743);
+}
+
+@media (max-width: 600px) {
+  .book {
+    height: auto;
+    padding: 1rem 1.3rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+  }
+
+  .book-subtitle {
+    font-size: 0.85rem;
+  }
+}
+
+.book.opening {
+  animation: openBook 0.6s ease forwards;
+  z-index: 999; /* bring it above others */
+  position: relative;
+  transform-origin: left center;
+}
+
+.bookshelf.fade-out {
+  opacity: 0.3;
+  transition: opacity 0.4s ease;
+}
+
+@keyframes openBook {
+  0% {
+    transform: translateY(0) scale(1) rotateY(0deg);
+  }
+  40% {
+    transform: translateY(-10px) scale(1.05) rotateY(-10deg);
+  }
+  100% {
+    transform: translateY(-20px) scale(1.25) rotateY(-90deg);
+    opacity: 0;
+  }
+}
+

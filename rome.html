@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Study Abroad Rome Guide</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      opacity: 0;
+      animation: fadeInPage 0.5s ease forwards;
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Helvetica Neue", Arial, sans-serif;
+      background: #3b1b16; 
+      color: #f4f0e9;
+    }
+
+    @keyframes fadeInPage {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+     @keyframes fadeOutPage {
+        from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    }
+
+    body.page-exit {
+
+    animation: fadeOutPage 0.4s ease forwards;
+    }
+
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .site-header {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 2.2rem clamp(1.5rem, 4vw, 4rem) 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .back-button {
+      border: none;
+      background: transparent;
+      color: #f4f0e9;
+      font-size: 0.9rem;
+      cursor: pointer;
+      opacity: 0.75;
+      padding: 0;
+    }
+
+    .back-button:hover {
+      opacity: 1;
+    }
+
+    .header-text h1 {
+      margin: 0 0 0.2rem;
+      font-size: clamp(1.9rem, 2.6vw, 2.3rem);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .header-text p {
+      margin: 0;
+      font-size: 0.95rem;
+      opacity: 0.8;
+    }
+
+    .city-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 2.5fr);
+      gap: 3rem;
+      padding: 2.4rem clamp(1.5rem, 4vw, 4rem) 4rem;
+    }
+
+    .city-hero {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    .city-book-3d {
+      --accent: #b56534; 
+      width: 260px;
+      height: 360px;
+      position: relative;
+      transform-style: preserve-3d;
+      transform: rotateY(-20deg) rotateX(14deg);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.7);
+      margin-bottom: 0.8rem;
+    }
+
+    .city-book-3d:hover {
+      transform: rotateY(-10deg) rotateX(8deg) translateY(-6px);
+    }
+
+    .city-book-face {
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      background: var(--accent);
+      overflow: hidden;
+    }
+
+    .city-book-front {
+      background: radial-gradient(
+        circle at 20% 0%,
+        #f5e9d8 0,
+        #e2c2a0 30%,
+        #b56534 100%
+      );
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1.4rem;
+    }
+
+    .book-title-main {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .book-title-sub {
+      font-size: 0.85rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+
+    .city-book-spine {
+      width: 42px;
+      inset: 0 auto 0 -42px;
+      transform: rotateY(90deg);
+      transform-origin: right center;
+      background: #2a120d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .book-gold-lines {
+      position: absolute;
+      inset: 0;
+      opacity: 0.5;
+      background-image:
+        radial-gradient(circle at 12% 22%, transparent 0, transparent 55%, rgba(255, 220, 160, 0.9) 56%, transparent 59%),
+        radial-gradient(circle at 70% 60%, transparent 0, transparent 55%, rgba(255, 220, 160, 0.9) 56%, transparent 59%);
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .city-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem 1.6rem;
+      font-size: 0.9rem;
+    }
+
+    .meta-item {
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .meta-label {
+      display: block;
+      margin-bottom: 0.15rem;
+      opacity: 0.65;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .meta-value {
+      font-weight: 500;
+    }
+
+    .time-box {
+  margin-top: 1.3rem;
+  margin-bottom: 0.6rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  gap: 0.7rem;
+}
+
+.time-box h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.85;
+  margin-bottom: 20px;
+}
+
+.analog-clock {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: #f4f0e9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.clock-face {
+  width: 90%;
+  height: 90%;
+  border-radius: 50%;
+  border: 2px solid #1f1a1d;
+  position: relative;
+  background: #f4f0e9;
+}
+
+.hand {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  transform-origin: bottom center;
+  transform: translateX(-50%) rotate(90deg);
+  background: #1f1a1d;
+  border-radius: 999px;
+}
+
+.hour-hand {
+  width: 4px;
+  height: 30%;
+}
+
+.minute-hand {
+  width: 3px;
+  height: 40%;
+}
+
+.second-hand {
+  width: 2px;
+  height: 44%;
+  background: #c18b4a; 
+}
+
+.clock-center {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #1f1a1d;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.time-label {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  text-align: center;
+  width: 35%;
+}
+
+.clock-number {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center;
+  font-size: 0.75rem;
+  color: #1f1a1d;
+}
+
+:root {
+  --clock-radius: 60px;
+}
+
+.clock-number.n12 {
+  transform: translate(-50%, -50%) translateY(calc(-1 * var(--clock-radius)));
+}
+.clock-number.n1 {
+  transform: translate(-50%, -50%) rotate(30deg)
+             translateY(calc(-1 * var(--clock-radius))) rotate(-30deg);
+}
+.clock-number.n2 {
+  transform: translate(-50%, -50%) rotate(60deg)
+             translateY(calc(-1 * var(--clock-radius))) rotate(-60deg);
+}
+.clock-number.n3 {
+  transform: translate(-50%, -50%) rotate(90deg)
+             translateY(calc(-1 * var(--clock-radius))) rotate(-90deg);
+}
+.clock-number.n4 {
+  transform: translate(-50%, -50%) rotate(120deg)
+             translateY(calc(-1 * var(--clock-radius))) rotate(-120deg);
+}
+.clock-number.n5 {
+  transform: translate(-50%, -50%) rotate(150deg)
+             translateY(calc(-1 * var(--clock-radius))) rotate(-150deg);
+}
+.clock-number.n6 {
+  transform: translate(-50%, -50%) rotate(180deg)
+             translateY(calc(-1 * var(--clock-radius))) rotate(-180deg);
+}
+.clock-number.n7 {
+  transform: translate(-50%, -50%) rotate(210deg)
+             translateY(calc(-1 * var(--clock-radius))) rotate(-210deg);
+}
+.clock-number.n8 {
+  transform: translate(-50%, -50%) rotate(240deg)
+             translateY(calc(-1 * var(--clock-radius))) rotate(-240deg);
+}
+.clock-number.n9 {
+  transform: translate(-50%, -50%) rotate(270deg)
+             translateY(calc(-1 * var(--clock-radius))) rotate(-270deg);
+}
+.clock-number.n10 {
+  transform: translate(-50%, -50%) rotate(300deg)
+             translateY(calc(-1 * var(--clock-radius))) rotate(-300deg);
+}
+.clock-number.n11 {
+  transform: translate(-50%, -50%) rotate(330deg)
+             translateY(calc(-1 * var(--clock-radius))) rotate(-330deg);
+}
+
+
+    .city-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      max-width: 640px;
+    }
+
+    .city-section h2,
+    .city-section h3 {
+      margin: 0 0 0.6rem;
+    }
+
+    .city-section p {
+      margin: 0.1rem 0 0.9rem;
+      line-height: 1.6;
+      font-size: 0.98rem;
+    }
+
+    .city-section small {
+      opacity: 0.75;
+      font-size: 0.8rem;
+    }
+
+    .neighborhood-list {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .neighborhood-card {
+      padding: 1rem 1.2rem;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: transform 0.2s ease, box-shadow 0.2s ease,
+        background 0.2s ease;
+    }
+
+    .neighborhood-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.4);
+    }
+
+    .neighborhood-card h4 {
+      margin: 0 0 0.2rem;
+      font-size: 1rem;
+    }
+
+    .neighborhood-meta {
+      margin: 0 0 0.5rem;
+      font-size: 0.83rem;
+      opacity: 0.8;
+    }
+
+    .neighborhood-meta span {
+      opacity: 0.9;
+    }
+
+    figure.Rome, figure.Trastevere, figure.Sanlorenzo, figure.Prati  {
+      max-width: 600px;
+      width: 100%;
+      margin: 0;
+    }
+
+    figure.Rome img, figure.Trastevere img, figure.Sanlorenzo img, figure.Prati img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+    }
+
+    .tips-list {
+      padding-left: 1.1rem;
+      margin: 0.2rem 0 0;
+      font-size: 0.96rem;
+      line-height: 1.6;
+    }
+
+    .tips-list li + li {
+      margin-top: 0.2rem;
+    }
+
+    .currency-box {
+      margin-top: 1.5rem;
+      padding: 0.9rem 1rem;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      max-width: 260px;
+      width: 100%;
+      align-self: flex-start;
+    }
+
+    .currency-box h3,
+    .currency-box h4 {
+      margin-top: 0;
+      margin-bottom: 0.6rem;
+      font-size: 0.95rem;
+    }
+
+    .currency-box label {
+      display: block;
+      margin-top: 0.6rem;
+      margin-bottom: 0.15rem;
+      font-size: 0.8rem;
+    }
+
+    .currency-box input,
+    .currency-box select {
+      width: 100%;
+      padding: 0.35rem;
+      border-radius: 6px;
+      border: none;
+      margin-bottom: 0.3rem;
+      font-size: 0.85rem;
+    }
+
+    .currency-box button {
+      margin-top: 0.5rem;
+      padding: 0.45rem 0.9rem;
+      background: #f0c66d; 
+      border: none;
+      border-radius: 6px;
+      color: #3b1b16;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    .currency-box button:hover {
+      filter: brightness(1.05);
+    }
+
+    #currency-result {
+      margin-top: 0.6rem;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 900px) {
+      .city-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 1.8rem 1.5rem 3rem;
+      }
+
+      .city-hero {
+        align-items: center;
+      }
+
+      .city-book-3d {
+        margin-inline: auto;
+      }
+
+      .city-meta {
+        width: 100%;
+      }
+
+      .city-content {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .site-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.6rem;
+        padding: 1.6rem 1.2rem 1.2rem;
+      }
+
+      .city-layout {
+        padding-inline: 1.2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <button class="back-button" type="button">
+      ← Back to shelf
+    </button>
+    <div class="header-text">
+      <h1>Rome</h1>
+    </div>
+  </header>
+
+  <main class="city-layout">
+    <!-- LEFT COLUMN: BOOK + META + BUDGET -->
+    <section class="city-hero">
+      <div class="city-book-3d">
+        <div class="city-book-face city-book-front">
+          <div class="book-title-sub">Study Abroad Guide</div>
+          <div class="book-title-main">Rome</div>
+          <div class="book-title-sub">Piazzas · Pasta · Tramonti</div>
+          <div class="book-gold-lines"></div>
+        </div>
+        <div class="city-book-face city-book-spine">
+          Rome
+        </div>
+      </div>
+
+      <div class="city-meta">
+        <div class="meta-item">
+          <span class="meta-label">Country</span>
+          <span class="meta-value">Italy</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Language</span>
+          <span class="meta-value">Italian</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Best for</span>
+          <span class="meta-value">History, food, slow evenings</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Weather now</span>
+          <span class="meta-value" id="city-weather">Coming soon with API ☁️</span>
+        </div>
+      </div>
+
+      <div class="time-box">
+  <h4>Local time in Rome</h4>
+  <div class="analog-clock">
+    <div class="clock-face">
+      <div class="clock-number n12">12</div>
+      <div class="clock-number n1">1</div>
+      <div class="clock-number n2">2</div>
+      <div class="clock-number n3">3</div>
+      <div class="clock-number n4">4</div>
+      <div class="clock-number n5">5</div>
+      <div class="clock-number n6">6</div>
+      <div class="clock-number n7">7</div>
+      <div class="clock-number n8">8</div>
+      <div class="clock-number n9">9</div>
+      <div class="clock-number n10">10</div>
+      <div class="clock-number n11">11</div>
+
+      <div class="hand hour-hand"></div>
+      <div class="hand minute-hand"></div>
+      <div class="hand second-hand"></div>
+      <div class="clock-center"></div>
+    </div>
+  </div>
+  <p class="time-label" id="local-time-text">--:--:--</p>
+</div>
+
+
+      <section class="city-section">
+        <h3>Budget snapshot for Rome</h3>
+        <p>
+          Rome can be surprisingly affordable for coffee and pizza slices, but rent near
+          the center or close to major universities adds up. Many students report spending
+          around <strong>€1,300 per month</strong> including housing, food, transit and
+          going out a few times a week.
+        </p>
+
+        <div class="budget-box">
+          <p><strong>Example monthly budget:</strong></p>
+          <ul class="budget-list">
+            <li>Rent (shared apartment): ~€700</li>
+            <li>Groceries & espresso: ~€260</li>
+            <li>Public transport pass: ~€50</li>
+            <li>Going out & gelato: ~€220</li>
+            <li>Misc / buffer: ~€70</li>
+          </ul>
+
+          <div class="currency-box">
+            <h4>Convert this budget</h4>
+
+            <label for="currency-amount">Amount</label>
+            <input
+              type="number"
+              id="currency-amount"
+              value="1300"
+              min="0"
+            />
+
+            <label for="currency-from">From</label>
+            <select id="currency-from">
+              <option value="EUR">EUR (€)</option>
+              <option value="USD">USD ($)</option>
+              <option value="GBP">GBP (£)</option>
+              <option value="KRW">KRW (₩)</option>
+              <option value="AUD">AUD (A$)</option>
+              <option value="ARS">ARS ($AR)</option>
+            </select>
+
+            <label for="currency-to">To</label>
+            <select id="currency-to">
+              <option value="USD">USD ($)</option>
+              <option value="EUR">EUR (€)</option>
+              <option value="GBP">GBP (£)</option>
+              <option value="KRW">KRW (₩)</option>
+              <option value="AUD">AUD (A$)</option>
+              <option value="ARS">ARS ($AR)</option>
+            </select>
+
+            <button id="convert-btn">Convert</button>
+
+            <p id="currency-result">1300 EUR = …</p>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- RIGHT COLUMN: CONTENT -->
+    <section class="city-content">
+      <section class="city-section">
+        <h2>Why study in Rome?</h2>
+        <p>
+          In Rome, your walk to class might pass ruins older than your entire home
+          country, tiny espresso bars, and laundry lines strung between apartments.
+          Daily life is a mix of buses, long lunches and golden-hour walks through
+          streets you’ve seen in movies.
+        </p>
+        <p>
+          The pace can feel slower than other capitals, but the city is dense with
+          history and small neighborhood rituals. This guide is here to help you
+          balance romantic expectations with the realistic parts: budgets, commutes
+          and where students actually live.
+        </p>
+      </section>
+
+
+      <figure class="Rome">
+        <img src="https://i.natgeofe.com/k/a6c9f195-de20-445d-9d36-745ef56042c5/OG_Colosseum_Ancient-Rome_KIDS_1122_3x2.jpg" alt="Rome" class="Rome">
+      </figure>
+
+      <section class="city-section">
+        <h3>Neighborhoods to know</h3>
+        <p><small>Programs place students all over the city, but these areas come up a lot for international students.</small></p>
+
+        <div class="neighborhood-list">
+          <article class="neighborhood-card">
+            <h4>Trastevere</h4>
+            <p class="neighborhood-meta">
+              Cobblestones · Nightlife · Riverfront · <span>$$$</span>
+            </p>
+            <p>
+              Picture-perfect alleys, ivy-covered façades and lots of bars and trattorie.
+              It’s incredibly atmospheric and walkable, but prices and noise levels can
+              be high, especially on weekends.
+            </p>
+          </article>
+
+          <figure class="Trastevere">
+             <img src="https://www.wantedinrome.com/i/preview/storage/uploads/2024/02/Trastevere.jpeg" alt="Trastevere" class="Trastevere">
+          </figure>
+
+          <article class="neighborhood-card">
+            <h4>San Lorenzo</h4>
+            <p class="neighborhood-meta">
+              Student-heavy · Graffiti · Cheaper eats · <span>$$</span>
+            </p>
+            <p>
+              Close to La Sapienza and other universities, with lots of budget-friendly
+              food and bars. Lively at night and more affordable than the historic
+              center, but a bit scruffier around the edges.
+            </p>
+          </article>
+
+          <figure class="Sanlorenzo">
+             <img src="https://commonedge.org/wp-content/uploads/2023/02/Alessandro_Vitali_San-Lorenzo-1662-1000x625.jpg" alt="Sanlorenzo" class="Sanlorenzo">
+          </figure>
+
+          <article class="neighborhood-card">
+            <h4>Prati</h4>
+            <p class="neighborhood-meta">
+              Residential · Near Vatican · Wide streets · <span>$$</span>
+            </p>
+            <p>
+              Elegant apartment blocks, calmer streets and easy access to the Vatican
+              and the river. Good if you like quieter nights and don’t mind taking the
+              metro or bus to nightlife areas.
+            </p>
+          </article>
+
+          <figure class="Prati">
+            <img src="https://mamalovesrome.com/wp-content/uploads/2022/03/Piazza-cavour-Rome-Depositphotos_473280486_S.jpg" alt="Prati" class="Prati">
+          </figure>
+        </div>
+      </section>
+
+      <section class="city-section">
+        <h3>Quick tips for students</h3>
+        <ul class="tips-list">
+          <li>Coffee is cheaper at the bar than sitting at a table, as Romans usually drink their espresso standing up.</li>
+          <li>Monthly passes for buses and metro can save money if your campus is far from your housing.</li>
+          <li>Dinner starts later than in some countries; 8–9pm is normal, and restaurants can be quiet earlier.</li>
+          <li>Many smaller shops close mid-day or on Sundays. Always check hours before making a long trip.</li>
+        </ul>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const API_KEY = "99cb740ef72542e2bbf181156250912";
+
+    fetch(`https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=Rome`)
+      .then(response => response.json())
+      .then(data => {
+        console.log("WEATHER DATA ROME:", data);
+
+        if (data.error) {
+          document.querySelector("#city-weather").textContent =
+            "Error: " + data.error.message;
+          return;
+        }
+
+        const weatherText = data.current.condition.text;
+        const tempC = data.current.temp_c;
+
+        document.querySelector("#city-weather").textContent =
+          `${tempC}°C — ${weatherText}`;
+      })
+      .catch(err => {
+        document.querySelector("#city-weather").textContent =
+          "Weather unavailable";
+        console.error("FETCH ERROR:", err);
+      });
+
+const TIME_API_KEY = "piHpV1FFnvWgCdrCU+IFuw==odFMlN1i7tK7LcMD";
+
+async function startAnalogClock(timezone) {
+  const hourHand = document.querySelector(".hour-hand");
+  const minuteHand = document.querySelector(".minute-hand");
+  const secondHand = document.querySelector(".second-hand");
+  const label = document.getElementById("local-time-text");
+
+  if (!hourHand || !minuteHand || !secondHand || !label) return;
+
+  try {
+    const res = await fetch(
+      `https://api.api-ninjas.com/v1/worldtime?timezone=${encodeURIComponent(timezone)}`,
+      {
+        headers: {
+          "X-Api-Key": TIME_API_KEY,
+        },
+      }
+    );
+
+    const data = await res.json();
+    console.log("TIME DATA ROME:", data);
+
+    if (data.error || !data.datetime) {
+      label.textContent = "Time unavailable";
+      return;
+    }
+
+    const [datePart, timePart] = data.datetime.split(" ");
+    const [year, month, day] = datePart.split("-").map(Number);
+    const [hour, minute, second] = timePart.split(":").map(Number);
+
+    let current = new Date(year, month - 1, day, hour, minute, second);
+
+    function updateHands() {
+      const h = current.getHours();
+      const m = current.getMinutes();
+      const s = current.getSeconds();
+
+      const hourDeg = ((h % 12) + m / 60) * 30;
+      const minuteDeg = (m + s / 60) * 6;
+      const secondDeg = s * 6;
+
+      hourHand.style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+      minuteHand.style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+      secondHand.style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+
+      const hh = String(h).padStart(2, "0");
+      const mm = String(m).padStart(2, "0");
+      const ss = String(s).padStart(2, "0");
+      label.textContent = `${hh}:${mm}:${ss}`;
+    }
+
+    updateHands();
+
+    setInterval(() => {
+      current.setSeconds(current.getSeconds() + 1);
+      updateHands();
+    }, 1000);
+  } catch (err) {
+    console.error("CLOCK ERROR:", err);
+    label.textContent = "Time unavailable";
+  }
+}
+
+startAnalogClock("Europe/Rome");
+
+    const CURRENCY_API = "https://api.frankfurter.app/latest";
+
+    async function convertCurrency(amount, from, to) {
+      const url = `${CURRENCY_API}?amount=${amount}&from=${from}&to=${to}`;
+      const res = await fetch(url);
+      const data = await res.json();
+      return data.rates[to];
+    }
+
+    document.getElementById("convert-btn").addEventListener("click", async () => {
+      const amount = document.getElementById("currency-amount").value;
+      const from = document.getElementById("currency-from").value;
+      const to = document.getElementById("currency-to").value;
+
+      if (!amount) {
+        document.getElementById("currency-result").textContent =
+          "Please enter an amount.";
+        return;
+      }
+
+      const result = await convertCurrency(amount, from, to);
+
+      if (result !== undefined) {
+        document.getElementById("currency-result").textContent =
+          `${amount} ${from} = ${result.toLocaleString()} ${to}`;
+      } else {
+        document.getElementById("currency-result").textContent =
+          "Conversion failed.";
+      }
+    });
+
+
+const backBtn = document.querySelector(".back-button");
+
+if (backBtn) {
+  backBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    document.body.classList.add("page-exit");
+
+    setTimeout(() => {
+      window.location.href = "home.html";
+    }, 400); 
+  });
+}
+
+  </script>
+</body>
+</html>

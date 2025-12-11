@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Study Abroad Sydney Guide</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      opacity: 0;
+      animation: fadeInPage 0.5s ease forwards;
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Helvetica Neue", Arial, sans-serif;
+      background: #042735; 
+      color: #f4f0e9;
+    }
+
+    @keyframes fadeInPage {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeOutPage {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    }
+
+    body.page-exit {
+    animation: fadeOutPage 0.4s ease forwards;
+    }
+
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .site-header {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 2.2rem clamp(1.5rem, 4vw, 4rem) 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .back-button {
+      border: none;
+      background: transparent;
+      color: #f4f0e9;
+      font-size: 0.9rem;
+      cursor: pointer;
+      opacity: 0.75;
+      padding: 0;
+    }
+
+    .back-button:hover {
+      opacity: 1;
+    }
+
+    .header-text h1 {
+      margin: 0 0 0.2rem;
+      font-size: clamp(1.9rem, 2.6vw, 2.3rem);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .header-text p {
+      margin: 0;
+      font-size: 0.95rem;
+      opacity: 0.8;
+    }
+
+    .city-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 2.5fr);
+      gap: 3rem;
+      padding: 2.4rem clamp(1.5rem, 4vw, 4rem) 4rem;
+    }
+
+    .city-hero {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    .city-book-3d {
+      --accent: #0a5f7a; 
+      width: 260px;
+      height: 360px;
+      position: relative;
+      transform-style: preserve-3d;
+      transform: rotateY(-20deg) rotateX(14deg);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.7);
+      margin-bottom: 0.8rem;
+    }
+
+    .city-book-3d:hover {
+      transform: rotateY(-10deg) rotateX(8deg) translateY(-6px);
+    }
+
+    .city-book-face {
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      background: var(--accent);
+      overflow: hidden;
+    }
+
+    .city-book-front {
+      background: radial-gradient(
+        circle at 20% 0%,
+        #f4fbff 0,
+        #c4e3f0 28%,
+        #0a5f7a 100%
+      );
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1.4rem;
+    }
+
+    .book-title-main {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .book-title-sub {
+      font-size: 0.85rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+
+    .city-book-spine {
+      width: 42px;
+      inset: 0 auto 0 -42px;
+      transform: rotateY(90deg);
+      transform-origin: right center;
+      background: #053141;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .book-gold-lines {
+      position: absolute;
+      inset: 0;
+      opacity: 0.45;
+      background-image:
+        radial-gradient(circle at 10% 25%, transparent 0, transparent 55%, rgba(255, 230, 170, 0.9) 56%, transparent 59%),
+        radial-gradient(circle at 72% 60%, transparent 0, transparent 55%, rgba(255, 230, 170, 0.9) 56%, transparent 59%);
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .city-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem 1.6rem;
+      font-size: 0.9rem;
+    }
+
+    .meta-item {
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .meta-label {
+      display: block;
+      margin-bottom: 0.15rem;
+      opacity: 0.65;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .meta-value {
+      font-weight: 500;
+    }
+
+    .time-box {
+  margin-top: 1.3rem;
+  margin-bottom: 0.6rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  gap: 0.7rem;
+}
+
+.time-box h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.85;
+  margin-bottom: 20px;
+}
+
+.analog-clock {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: #f4f0e9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.clock-face {
+  width: 90%;
+  height: 90%;
+  border-radius: 50%;
+  border: 2px solid #1f1a1d;
+  position: relative;
+  background: #f4f0e9;
+}
+
+.hand {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  transform-origin: bottom center;
+  transform: translateX(-50%) rotate(90deg);
+  background: #1f1a1d;
+  border-radius: 999px;
+}
+
+.hour-hand {
+  width: 4px;
+  height: 30%;
+}
+
+.minute-hand {
+  width: 3px;
+  height: 40%;
+}
+
+.second-hand {
+  width: 2px;
+  height: 44%;
+  background: #c18b4a; 
+}
+
+.clock-center {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #1f1a1d;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.time-label {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  text-align: center;
+  width: 35%;
+}
+
+.clock-number {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center;
+  font-size: 0.75rem;
+  color: #1f1a1d;
+}
+
+:root {
+  --clock-radius: 60px;
+}
+
+.clock-number.n12 {
+  transform: translate(-50%, -50%) translateY(calc(-1 * var(--clock-radius)));
+}
+.clock-number.n1 {
+  transform: translate(-50%, -50%) rotate(30deg)
+             translateY(calc(-1 * var(--clock-radius))) rotate(-30deg);
+}
+.clock-number.n2 {
+  transform: translate(-50%, -50%) rotate(60deg)
+             translateY(calc(-1 * var(--clock-radius))) rotate(-60deg);
+}
+.clock-number.n3 {
+  transform: translate(-50%, -50%) rotate(90deg)
+             translateY(calc(-1 * var(--clock-radius))) rotate(-90deg);
+}
+.clock-number.n4 {
+  transform: translate(-50%, -50%) rotate(120deg)
+             translateY(calc(-1 * var(--clock-radius))) rotate(-120deg);
+}
+.clock-number.n5 {
+  transform: translate(-50%, -50%) rotate(150deg)
+             translateY(calc(-1 * var(--clock-radius))) rotate(-150deg);
+}
+.clock-number.n6 {
+  transform: translate(-50%, -50%) rotate(180deg)
+             translateY(calc(-1 * var(--clock-radius))) rotate(-180deg);
+}
+.clock-number.n7 {
+  transform: translate(-50%, -50%) rotate(210deg)
+             translateY(calc(-1 * var(--clock-radius))) rotate(-210deg);
+}
+.clock-number.n8 {
+  transform: translate(-50%, -50%) rotate(240deg)
+             translateY(calc(-1 * var(--clock-radius))) rotate(-240deg);
+}
+.clock-number.n9 {
+  transform: translate(-50%, -50%) rotate(270deg)
+             translateY(calc(-1 * var(--clock-radius))) rotate(-270deg);
+}
+.clock-number.n10 {
+  transform: translate(-50%, -50%) rotate(300deg)
+             translateY(calc(-1 * var(--clock-radius))) rotate(-300deg);
+}
+.clock-number.n11 {
+  transform: translate(-50%, -50%) rotate(330deg)
+             translateY(calc(-1 * var(--clock-radius))) rotate(-330deg);
+}
+
+
+    .city-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      max-width: 640px;
+    }
+
+    .city-section h2,
+    .city-section h3 {
+      margin: 0 0 0.6rem;
+    }
+
+    .city-section p {
+      margin: 0.1rem 0 0.9rem;
+      line-height: 1.6;
+      font-size: 0.98rem;
+    }
+
+    .city-section small {
+      opacity: 0.75;
+      font-size: 0.8rem;
+    }
+
+    .neighborhood-list {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .neighborhood-card {
+      padding: 1rem 1.2rem;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: transform 0.2s ease, box-shadow 0.2s ease,
+        background 0.2s ease;
+    }
+
+    .neighborhood-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.4);
+    }
+
+    .neighborhood-card h4 {
+      margin: 0 0 0.2rem;
+      font-size: 1rem;
+    }
+
+    .neighborhood-meta {
+      margin: 0 0 0.5rem;
+      font-size: 0.83rem;
+      opacity: 0.8;
+    }
+
+    .neighborhood-meta span {
+      opacity: 0.9;
+    }
+
+    figure.Sydney, figure.Newtown, figure.Surryhills, figure.Manly  {
+      max-width: 600px;
+      width: 100%;
+      margin: 0;
+    }
+
+    figure.Sydney img, figure.Newtown img, figure.Surryhills img, figure.Manly img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+    }
+
+    .tips-list {
+      padding-left: 1.1rem;
+      margin: 0.2rem 0 0;
+      font-size: 0.96rem;
+      line-height: 1.6;
+    }
+
+    .tips-list li + li {
+      margin-top: 0.2rem;
+    }
+
+    .currency-box {
+      margin-top: 1.5rem;
+      padding: 0.9rem 1rem;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      max-width: 260px;
+      width: 100%;
+      align-self: flex-start;
+    }
+
+    .currency-box h3,
+    .currency-box h4 {
+      margin-top: 0;
+      margin-bottom: 0.6rem;
+      font-size: 0.95rem;
+    }
+
+    .currency-box label {
+      display: block;
+      margin-top: 0.6rem;
+      margin-bottom: 0.15rem;
+      font-size: 0.8rem;
+    }
+
+    .currency-box input,
+    .currency-box select {
+      width: 100%;
+      padding: 0.35rem;
+      border-radius: 6px;
+      border: none;
+      margin-bottom: 0.3rem;
+      font-size: 0.85rem;
+    }
+
+    .currency-box button {
+      margin-top: 0.5rem;
+      padding: 0.45rem 0.9rem;
+      background: #ffdd7b;
+      border: none;
+      border-radius: 6px;
+      color: #042735;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    .currency-box button:hover {
+      filter: brightness(1.05);
+    }
+
+    #currency-result {
+      margin-top: 0.6rem;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 900px) {
+      .city-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 1.8rem 1.5rem 3rem;
+      }
+
+      .city-hero {
+        align-items: center;
+      }
+
+      .city-book-3d {
+        margin-inline: auto;
+      }
+
+      .city-meta {
+        width: 100%;
+      }
+
+      .city-content {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .site-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.6rem;
+        padding: 1.6rem 1.2rem 1.2rem;
+      }
+
+      .city-layout {
+        padding-inline: 1.2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <button class="back-button" type="button">
+      ← Back to shelf
+    </button>
+    <div class="header-text">
+      <h1>Sydney</h1>
+    </div>
+  </header>
+
+  <main class="city-layout">
+    <!-- LEFT COLUMN: BOOK + META + BUDGET -->
+    <section class="city-hero">
+      <div class="city-book-3d">
+        <div class="city-book-face city-book-front">
+          <div class="book-title-sub">Study Abroad Guide</div>
+          <div class="book-title-main">Sydney</div>
+          <div class="book-title-sub">Harbour · Beaches · Cafés</div>
+          <div class="book-gold-lines"></div>
+        </div>
+        <div class="city-book-face city-book-spine">
+          Sydney
+        </div>
+      </div>
+
+      <div class="city-meta">
+        <div class="meta-item">
+          <span class="meta-label">Country</span>
+          <span class="meta-value">Australia</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Language</span>
+          <span class="meta-value">English</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Best for</span>
+          <span class="meta-value">Beaches, coffee, outdoorsy city life</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Weather now</span>
+          <span class="meta-value" id="city-weather">Coming soon with API ☁️</span>
+        </div>
+      </div>
+
+      <div class="time-box">
+  <h4>Local time in Sydney</h4>
+  <div class="analog-clock">
+    <div class="clock-face">
+      <div class="clock-number n12">12</div>
+      <div class="clock-number n1">1</div>
+      <div class="clock-number n2">2</div>
+      <div class="clock-number n3">3</div>
+      <div class="clock-number n4">4</div>
+      <div class="clock-number n5">5</div>
+      <div class="clock-number n6">6</div>
+      <div class="clock-number n7">7</div>
+      <div class="clock-number n8">8</div>
+      <div class="clock-number n9">9</div>
+      <div class="clock-number n10">10</div>
+      <div class="clock-number n11">11</div>
+
+      <div class="hand hour-hand"></div>
+      <div class="hand minute-hand"></div>
+      <div class="hand second-hand"></div>
+      <div class="clock-center"></div>
+    </div>
+  </div>
+  <p class="time-label" id="local-time-text">--:--:--</p>
+</div>
+
+
+      <section class="city-section">
+        <h3>Budget snapshot for Sydney</h3>
+        <p>
+          Sydney is beautiful but not cheap, especially rent and eating out. With
+          shared housing, a student Opal card and a mix of cooking and café trips,
+          many students report spending around
+          <strong>A$2,000 per month</strong>.
+        </p>
+
+        <div class="budget-box">
+          <p><strong>Example monthly budget:</strong></p>
+          <ul class="budget-list">
+            <li>Rent (shared flat): ~A$1,150</li>
+            <li>Groceries & coffee: ~A$350</li>
+            <li>Opal card & transport: ~A$120</li>
+            <li>Going out & beach days: ~A$260</li>
+            <li>Misc / buffer: ~A$120</li>
+          </ul>
+
+          <div class="currency-box">
+            <h4>Convert this budget</h4>
+
+            <label for="currency-amount">Amount</label>
+            <input
+              type="number"
+              id="currency-amount"
+              value="2000"
+              min="0"
+            />
+
+            <label for="currency-from">From</label>
+            <select id="currency-from">
+              <option value="AUD">AUD (A$)</option>
+              <option value="USD">USD ($)</option>
+              <option value="EUR">EUR (€)</option>
+              <option value="GBP">GBP (£)</option>
+              <option value="KRW">KRW (₩)</option>
+              <option value="ARS">ARS ($AR)</option>
+            </select>
+
+            <label for="currency-to">To</label>
+            <select id="currency-to">
+              <option value="USD">USD ($)</option>
+              <option value="EUR">EUR (€)</option>
+              <option value="GBP">GBP (£)</option>
+              <option value="KRW">KRW (₩)</option>
+              <option value="AUD">AUD (A$)</option>
+              <option value="ARS">ARS ($AR)</option>
+            </select>
+
+            <button id="convert-btn">Convert</button>
+
+            <p id="currency-result">2000 AUD = …</p>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- RIGHT COLUMN: CONTENT -->
+    <section class="city-content">
+      <section class="city-section">
+        <h2>Why study in Sydney?</h2>
+        <p>
+          Sydney gives you a big-city campus life with beaches, coastal walks and ferries
+          built into your weekday routine. You might have lecture in the morning, grab
+          coffee in a laneway café, and end the day watching the sunset at the harbour.
+        </p>
+        <p>
+          It’s active, outdoorsy and very café-based, but the spread-out layout means
+          you’ll think a lot about commute times and which neighborhood to call home.
+          This guide is here to help you picture what daily life and costs look like.
+        </p>
+      </section>
+
+      <figure class="Sydney">
+       <img src="https://www.pelago.com/img/destinations/sydney/hero-image-xlarge.jpg" alt="Sydney" class="Sydney">
+      </figure>
+
+      <section class="city-section">
+        <h3>Neighborhoods to know</h3>
+        <p><small>Different programs use different campuses, but these areas show up a lot for students.</small></p>
+
+        <div class="neighborhood-list">
+          <article class="neighborhood-card">
+            <h4>Newtown</h4>
+            <p class="neighborhood-meta">
+              Student-heavy · Street art · Veggie food · <span>$$</span>
+            </p>
+            <p>
+              Close to the University of Sydney, full of second-hand shops, cheap eats
+              and live music. Great if you like a slightly grungy, creative vibe and
+              don’t mind a bit of late-night noise.
+            </p>
+          </article>
+
+          <figure class="Newtown">
+             <img src="https://www.highlandproperty.com.au/media/images/Newtown.width-400.jpg" alt="Newtown" class="Sydney"> 
+          </figure>
+
+          <article class="neighborhood-card">
+            <h4>Surry Hills</h4>
+            <p class="neighborhood-meta">
+              Cafés · Brunch spots · Terraces · <span>$$$</span>
+            </p>
+            <p>
+              Known for brunch, small bars and pretty terrace houses. Walkable to the
+              CBD and popular with young professionals, so rents are higher but the
+              “everything is nearby” factor is strong.
+            </p>
+          </article>
+
+          <figure class="Surryhills">
+             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi-o0J1uGtIPDnns9dUOAQ2SyQ7GfKCH6sDJ_KYc8uE8bUHPWwF6Wa2Q3K-0IKn8hgNIWrQ2ECvYr52C9M0wQAhkcQyP1s5i2Na32ub6SSx3YOVBJNg_EsoDnBK0kSdseTUKY62zw/s1600/Surry+Hills+Harmony+Park.JPG" alt="Surry Hills" class="Surryhills"> 
+          </figure>
+
+          <article class="neighborhood-card">
+            <h4>Manly</h4>
+            <p class="neighborhood-meta">
+              Beach town · Ferry commute · Surf vibe · <span>$$</span>
+            </p>
+            <p>
+              A beach suburb across the harbour with surf, coastal walks and a slower
+              pace. Your commute might include a ferry ride, which is gorgeous but
+              adds time—worth it if you’re a beach person.
+            </p>
+          </article>
+
+          <figure class="Manly">
+             <img src="https://media.cntraveler.com/photos/59516243365ba72b7a69c4e4/16:9/w_2560%2Cc_limit/GettyImages-500049291.jpg" alt="Manly" class="Manly">
+          </figure>
+        </div>
+      </section>
+
+      <section class="city-section">
+        <h3>Quick tips for students</h3>
+        <ul class="tips-list">
+          <li>Get an Opal card early; tapping on/off buses, trains and ferries becomes automatic very fast.</li>
+          <li>Cafés are a big part of social life, “grabbing a coffee” is basically a hobby, so budget a little for it.</li>
+          <li>Australia’s seasons are flipped from the northern hemisphere; February can feel like peak summer.</li>
+          <li>Sun is intense. Sunscreen, a hat and reusable water bottle are not optional if you’re outside a lot.</li>
+        </ul>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const API_KEY = "99cb740ef72542e2bbf181156250912";
+
+    fetch(`https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=Sydney`)
+      .then(response => response.json())
+      .then(data => {
+        console.log("WEATHER DATA SYDNEY:", data);
+
+        if (data.error) {
+          document.querySelector("#city-weather").textContent =
+            "Error: " + data.error.message;
+          return;
+        }
+
+        const weatherText = data.current.condition.text;
+        const tempC = data.current.temp_c;
+
+        document.querySelector("#city-weather").textContent =
+          `${tempC}°C — ${weatherText}`;
+      })
+      .catch(err => {
+        document.querySelector("#city-weather").textContent =
+          "Weather unavailable";
+        console.error("FETCH ERROR:", err);
+      });
+
+const TIME_API_KEY = "piHpV1FFnvWgCdrCU+IFuw==odFMlN1i7tK7LcMD";
+
+async function startAnalogClock(timezone) {
+  const hourHand = document.querySelector(".hour-hand");
+  const minuteHand = document.querySelector(".minute-hand");
+  const secondHand = document.querySelector(".second-hand");
+  const label = document.getElementById("local-time-text");
+
+  if (!hourHand || !minuteHand || !secondHand || !label) return;
+
+  try {
+    const res = await fetch(
+      `https://api.api-ninjas.com/v1/worldtime?timezone=${encodeURIComponent(timezone)}`,
+      {
+        headers: {
+          "X-Api-Key": TIME_API_KEY,
+        },
+      }
+    );
+
+    const data = await res.json();
+    console.log("TIME DATA SYDNEY:", data);
+
+    if (data.error || !data.datetime) {
+      label.textContent = "Time unavailable";
+      return;
+    }
+
+    const [datePart, timePart] = data.datetime.split(" ");
+    const [year, month, day] = datePart.split("-").map(Number);
+    const [hour, minute, second] = timePart.split(":").map(Number);
+
+    let current = new Date(year, month - 1, day, hour, minute, second);
+
+    function updateHands() {
+      const h = current.getHours();
+      const m = current.getMinutes();
+      const s = current.getSeconds();
+
+      const hourDeg = ((h % 12) + m / 60) * 30;
+      const minuteDeg = (m + s / 60) * 6;
+      const secondDeg = s * 6;
+
+      hourHand.style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+      minuteHand.style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+      secondHand.style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+
+      const hh = String(h).padStart(2, "0");
+      const mm = String(m).padStart(2, "0");
+      const ss = String(s).padStart(2, "0");
+      label.textContent = `${hh}:${mm}:${ss}`;
+    }
+
+    updateHands();
+
+    setInterval(() => {
+      current.setSeconds(current.getSeconds() + 1);
+      updateHands();
+    }, 1000);
+  } catch (err) {
+    console.error("CLOCK ERROR:", err);
+    label.textContent = "Time unavailable";
+  }
+}
+
+startAnalogClock("Australia/Sydney");
+
+    const CURRENCY_API = "https://api.frankfurter.app/latest";
+
+    async function convertCurrency(amount, from, to) {
+      const url = `${CURRENCY_API}?amount=${amount}&from=${from}&to=${to}`;
+      const res = await fetch(url);
+      const data = await res.json();
+      return data.rates[to];
+    }
+
+    document.getElementById("convert-btn").addEventListener("click", async () => {
+      const amount = document.getElementById("currency-amount").value;
+      const from = document.getElementById("currency-from").value;
+      const to = document.getElementById("currency-to").value;
+
+      if (!amount) {
+        document.getElementById("currency-result").textContent =
+          "Please enter an amount.";
+        return;
+      }
+
+      const result = await convertCurrency(amount, from, to);
+
+      if (result !== undefined) {
+        document.getElementById("currency-result").textContent =
+          `${Number(amount).toLocaleString()} ${from} = ${result.toLocaleString()} ${to}`;
+      } else {
+        document.getElementById("currency-result").textContent =
+          "Conversion failed.";
+      }
+    });
+
+    const backBtn = document.querySelector(".back-button");
+
+    if (backBtn) {
+    backBtn.addEventListener("click", (event) => {
+        event.preventDefault(); 
+
+        document.body.classList.add("page-exit");
+
+        setTimeout(() => {
+        window.location.href = "home.html";
+        }, 400); 
+    });
+    }
+
+  </script>
+</body>
+</html>
